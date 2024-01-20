@@ -10,7 +10,7 @@ This projects consists of simple Extract Transform Load pipeline. The steps foll
 
 ### Extract the data
 
-The data is extracted from the Schipol Developer Center [website] (https://developer.schiphol.nl/) and the endpoint is `flights` .
+The data is extracted from the Schipol Developer Center [website](https://developer.schiphol.nl/) and the endpoint is `flights` .
 
 ### Clean the data
 
