@@ -8,12 +8,12 @@ def main():
     load_dotenv()
     APP_ID = os.getenv('APP_ID_AMS')
     APP_KEY = os.getenv('APP_KEY_AMS')
-    URL = os.getenv('URL')
-    ENDPOINT = os.getenv('ENDPOINT')
+    URL = conf.URL
+    ENDPOINT = conf.ENDPOINT
 
-    data_flights = extract_all(URL, ENDPOINT, APP_ID, APP_KEY)
+    data_flights = pipeline.extract_all(URL, ENDPOINT, APP_ID, APP_KEY)
     ... # Further Transformations
-    load_parquet(data_flights, path = 'data/data_flights.parquet')
+    pipeline.load_parquet(data_flights, path = 'data/data_flights.parquet')
 
 
 if __name__ == '__main__':
