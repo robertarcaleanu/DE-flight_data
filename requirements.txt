@@ -1,3 +1,4 @@
 polars
 requests
 dotenv
+boto3
