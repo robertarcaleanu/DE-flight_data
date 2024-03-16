@@ -16,7 +16,7 @@ In this case, we are extracting arrivals and departues separately, as they have 
 
 ### Clean the data
 
-For this part, we only keep columns of interest, and define the actual landing/departure time. Additioanlly,  `scheduleDateTime` is created combining `scheduleDate` and  `scheduleTime`.
+For this part, we only keep columns of interest, and define the actual landing/departure time. Additioanally,  `scheduleDateTime` is created combining `scheduleDate` and  `scheduleTime`.
 
 ### Validate the data
 
@@ -28,18 +28,61 @@ WIP
 
 ### Store the data
 
+#### AWS S3 Bucket
 The data is stored in  s3 bucket in AWS. To do so, first we save the file locally (`.parquet` format for memory optimization), and then upload it using the `boto3` package.
 
 More details on how to upload files to s3 can be found [here](https://medium.com/@financial_python/uploading-files-to-aws-s3-using-python-and-boto3-622efbe1af5c).
 
-[WIP] Finally, we can save the data in Data Warehouse, such as Snowflake.
+#### Snowflake
+
+[WIP] Finally, we can save the data in Data Warehouse, such as Snowflake. First of all, we need to create a Snowflake account (we can use the free tier).
+
+Let's with the data ingestion into Snowflake:
+
+1. Create Database and Schema
+```sql
+-- Create Database
+CREATE DATABASE ams_flights;
+USE DATABASE ams_flights;
+
+-- Create a table on Snowflake to store the S3 data
+CREATE SCHEMA flights_info;
+USE SCHEMA flights_info;
+```
+2. Create Table
+```sql
+CREATE OR REPLACE TABLE flight_info(
+    ID INT,
+    FLIGHT_DIRECTION STRING,
+    SERVICE_TRYPE STRING,
+    FLIGHT_NAME STRING,
+    AIRCRAFT_TYPE OBJECT,
+    ACTUAL_DATE_TIME STRING,
+    AIRLINE_CODE STRING,
+    TERMINAL STRING,
+    SCHEDULE_DATE_TIME STRING    
+);
+```
+3. Create Stage
+4. 
+!["Data View"](images/data.png)
+!["Stage Creation"](images/stage_creation.png)
+5. Copy data from stage to table
+```sql
+ COPY INTO FLIGHT_INFO 
+ FROM @my_s3_stage  
+ FILE_FORMAT = (TYPE = 'PARQUET')
+ ON_ERROR = 'CONTINUE';
+```
+
+Further improvements could be creating a real-time ingestion using the Snowflake `PIPE` function.
 
 ### Create a dashboard
 
 The dashboard will be created using Power BI (or alternatively Streamlit). It includes the following features:
 
 - Most Operated Airlines by Flight Direction
-- Percentage of Arrivals vs Departues
+- Percentage of Arrivals vs Departures
 - Number of flights by serviceType
 - Flights Over Time
 
