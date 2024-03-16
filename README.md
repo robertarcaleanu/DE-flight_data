@@ -64,16 +64,23 @@ CREATE OR REPLACE TABLE flight_info(
 );
 ```
 3. Create Stage
-4. 
-!["Data View"](images/data.png)
-!["Stage Creation"](images/stage_creation.png)
-5. Copy data from stage to table
+
+
+<div style="display: flex;">
+    <img src="images/data.png" alt="Image 1" style="width: 49%;">
+    <img src="images/stage_creation.png" alt="Image 2" style="width: 49%;">
+</div>
+
+4. Copy data from stage to table
 ```sql
  COPY INTO FLIGHT_INFO 
  FROM @my_s3_stage  
  FILE_FORMAT = (TYPE = 'PARQUET')
  ON_ERROR = 'CONTINUE';
 ```
+5. Finally, we can query the data
+
+!["Data in Snowflake"](images/result_snowflake.png)
 
 Further improvements could be creating a real-time ingestion using the Snowflake `PIPE` function.
 
