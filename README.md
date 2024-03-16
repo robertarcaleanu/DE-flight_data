@@ -38,15 +38,17 @@ More details on how to upload files to s3 can be found [here](https://medium.com
 
 The dashboard will be created using Power BI (or alternatively Streamlit). It includes the following features:
 
-- Total #departures / #arrivals
-- Departures and arrivals over time
-- Average delay
-- Most punctual airlines 
+- Most Operated Airlines by Flight Direction
+- Percentage of Arrivals vs Departues
+- Number of flights by serviceType
+- Flights Over Time
 
+The final output looks like this:
+
+!["PowerBI Dashboard"](images/PowerBI_Dashboard.png)
 
 _Possible next steps could be:_
 
 * Automate pipeline (e.g. using Airflow)
-* Make the pipeline idempotent
 
 
