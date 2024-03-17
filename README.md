@@ -1,6 +1,6 @@
 ## Data Engineering project
 
-This projects consists of simple Extract Transform Load pipeline. The steps followed during the development are listed below:
+This project consists of a simple Extract Transform Load pipeline. The steps followed during the development are listed below:
 
 1. Download the data from the AMS Airport API - [here](https://developer.schiphol.nl/) 
 2. Clean the data
@@ -12,15 +12,13 @@ This projects consists of simple Extract Transform Load pipeline. The steps foll
 
 The data is extracted from the Schipol Developer Center [website](https://developer.schiphol.nl/) and the endpoint is `flights`.
 
-In this case, we are extracting arrivals and departues separately, as they have different columns, which need to be cleaned before saving them.
+In this case, we are extracting arrivals and departures separately, as they have different columns, which need to be cleaned before saving them.
 
 ### Clean the data
 
 For this part, we only keep columns of interest, and define the actual landing/departure time. Additioanally,  `scheduleDateTime` is created combining `scheduleDate` and  `scheduleTime`.
 
-### Validate the data
-
-WIP
+### [WIP] -  Validate the data
 
 - Remove duplicates
 - Outlier detection
@@ -35,9 +33,9 @@ More details on how to upload files to s3 can be found [here](https://medium.com
 
 #### Snowflake
 
-[WIP] Finally, we can save the data in Data Warehouse, such as Snowflake. First of all, we need to create a Snowflake account (we can use the free tier).
+Finally, we can save the data in Data Warehouse, such as Snowflake. First of all, we need to create a Snowflake account (we can use the free tier).
 
-Let's with the data ingestion into Snowflake:
+Let's start with the data ingestion into Snowflake:
 
 1. Create Database and Schema
 ```sql
@@ -76,7 +74,8 @@ CREATE OR REPLACE TABLE flight_info(
  COPY INTO FLIGHT_INFO 
  FROM @my_s3_stage  
  FILE_FORMAT = (TYPE = 'PARQUET')
- ON_ERROR = 'CONTINUE';
+ ON_ERROR = 'CONTINUE'
+match_by_column_name = case_insensitive;;
 ```
 5. Finally, we can query the data
 
@@ -86,7 +85,7 @@ Further improvements could be creating a real-time ingestion using the Snowflake
 
 ### Create a dashboard
 
-The dashboard will be created using Power BI (or alternatively Streamlit). It includes the following features:
+The dashboard is created using Power BI (or alternatively Streamlit). It includes the following features:
 
 - Most Operated Airlines by Flight Direction
 - Percentage of Arrivals vs Departures
